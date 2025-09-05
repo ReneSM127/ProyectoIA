@@ -156,12 +156,7 @@ class AsistenteClima:
             if not comando:
                 self.hablar("No te escuché bien. ¿Podrías repetir?")
                 continue
-            
-            # ciudad = self.escuchar()
-            
-            if not comando:
-                self.hablar("No reconocí la ciudad. Intenta decir solo el nombre, como Madrid o Barcelona")
-                continue
+                        
             
             self.hablar(f"Buscando el clima para {comando.capitalize()}")
             datos_clima = self.obtener_clima(comando)
