@@ -32,29 +32,43 @@ class AsistenteClima:
         print("¡Asistente listo!")
 
     def hablar(self, texto):
-        
         print(f"Asistente: {texto}")
         
+        tmp_file_name = None  # Inicializar el nombre del archivo
         try:
-            # Crear archivo de audio temporal
+            # Crear el objeto gTTS
             tts = gTTS(text=texto, lang='es', slow=False)
+            
+            # Crear un archivo temporal, obtener su nombre y cerrarlo inmediatamente
+            # El parámetro delete=False es clave para que no se borre al cerrar.
             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as tmp_file:
-                tts.save(tmp_file.name)
-                
-                # Reproducir audio
-                pygame.mixer.music.load(tmp_file.name)
-                pygame.mixer.music.play()
-                
-                # Esperar a que termine de reproducirse
-                while pygame.mixer.music.get_busy():
-                    time.sleep(0.1)
-                
-                # Limpiar archivo temporal
-                os.unlink(tmp_file.name)
+                tmp_file_name = tmp_file.name
+            
+            # Ahora que el archivo está cerrado, gTTS puede guardar en él sin problemas
+            tts.save(tmp_file_name)
+            
+            # Pygame puede cargar el archivo porque ya no está bloqueado
+            pygame.mixer.music.load(tmp_file_name)
+            pygame.mixer.music.play()
+            
+            # Esperar a que termine de reproducirse
+            while pygame.mixer.music.get_busy():
+                time.sleep(0.1)
                 
         except Exception as e:
             print(f"Error en síntesis de voz: {e}")
             print("(Modo texto por fallo de audio)")
+            
+        finally:
+            # Usamos finally para asegurarnos de que el archivo SIEMPRE se elimine
+            if tmp_file_name and os.path.exists(tmp_file_name):
+                try:
+                    # Esperar un poco antes de borrar, por si el sistema aún lo usa
+                    time.sleep(0.2)
+                    os.unlink(tmp_file_name)
+                except Exception as e:
+                    print(f"No se pudo eliminar el archivo temporal: {e}")
+
 
     def escuchar(self):
         
