@@ -183,6 +183,9 @@ class AsistenteClima:
             if any(palabra in respuesta for palabra in ['salir', 'terminar', 'adiós', 'chao']):
                 self.hablar("¡Hasta luego! Que tengas un buen día.")
                 break
+            
+            elif any(palabra in respuesta for palabra in ['Si', 'Sí', 'Continua']):
+                continue
 
 def main():
     """Función principal"""
