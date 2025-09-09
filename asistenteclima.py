@@ -49,7 +49,6 @@ class AsistenteClima:
             while pygame.mixer.music.get_busy():
                 time.sleep(0.1)
             
-            # LÍNEA CLAVE AÑADIDA: Le decimos a pygame que suelte el archivo
             pygame.mixer.music.unload()
                 
         except Exception as e:
@@ -57,12 +56,10 @@ class AsistenteClima:
             print("(Modo texto por fallo de audio)")
             
         finally:
-            # Ahora, cuando se intente borrar, el archivo ya debería estar liberado
             if tmp_file_name and os.path.exists(tmp_file_name):
                 try:
                     os.unlink(tmp_file_name)
                 except Exception as e:
-                    # Este print ya no debería aparecer
                     print(f"No se pudo eliminar el archivo temporal: {e}")
 
     def escuchar(self):
