@@ -1,6 +1,18 @@
 # Asistente de Clima
 Proyecto de IA
 
+# Instalación
+Se necesita instalar Python >=3.10
+
+Para instalar las librerías necesarias utilizamos el siguiente comando:
+```
+pip install SpeechRecognition pyaudio requests gTTTS pygame
+```
+En caso de usar un entorno virtual de python
+```
+pip install -r requirements.txt
+```
+
 # Funcionamiento del código
 
 ## Librerías a utilizar
