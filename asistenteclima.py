@@ -162,7 +162,10 @@ class AsistenteClima:
             if not comando:
                 self.hablar("No te escuché bien. ¿Podrías repetir?")
                 continue
-                        
+            
+            if any(palabra in comando for palabra in ['salir', 'terminar', 'adiós', 'chao']):
+                    self.hablar("¡Hasta luego! Que tengas un buen día.")
+                    break
             
             self.hablar(f"Buscando el clima para {comando.capitalize()}")
             datos_clima = self.obtener_clima(comando)
@@ -177,12 +180,15 @@ class AsistenteClima:
             self.hablar("¿Quieres consultar otra ciudad? O puedes decirme adiós para finalizar")
             
             respuesta = self.escuchar()
-            if any(palabra in respuesta for palabra in ['salir', 'terminar', 'adiós', 'chao']):
-                self.hablar("¡Hasta luego! Que tengas un buen día.")
-                break
-            
-            elif any(palabra in respuesta for palabra in ['Si', 'Sí', 'Continua']):
-                continue
+            if respuesta:
+                if any(palabra in respuesta for palabra in ['salir', 'terminar', 'adiós', 'chao']):
+                    self.hablar("¡Hasta luego! Que tengas un buen día.")
+                    break
+                
+                elif any(palabra in respuesta for palabra in ['Si', 'Sí', 'Continua']):
+                    continue
+            else:
+                self.hablar("No te entendí. Preguntaré de nuevo.")
 
 def main():
     """Función principal"""
