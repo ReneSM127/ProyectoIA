@@ -31,18 +31,23 @@ class AsistenteClima:
             self.recognizer.adjust_for_ambient_noise(source, duration=1)
         print("¡Asistente listo!")
 
+    #Funcion para pasar texto a audio y reproducirlo
     def hablar(self, texto):
         print(f"Asistente: {texto}")
         
         tmp_file_name = None
         try:
+            #Inicializar gTTS
             tts = gTTS(text=texto, lang='es', slow=False)
             
+            #Crear archivo temporal .mp3
             with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as tmp_file:
                 tmp_file_name = tmp_file.name
             
+            #Guarda el archivo .mp3 con el audio de google
             tts.save(tmp_file_name)
             
+            #Carga y reproduce el audio
             pygame.mixer.music.load(tmp_file_name)
             pygame.mixer.music.play()
             
@@ -55,6 +60,7 @@ class AsistenteClima:
             print(f"Error en síntesis de voz: {e}")
             print("(Modo texto por fallo de audio)")
             
+        #Elimina el archivo temporal
         finally:
             if tmp_file_name and os.path.exists(tmp_file_name):
                 try:
@@ -62,6 +68,7 @@ class AsistenteClima:
                 except Exception as e:
                     print(f"No se pudo eliminar el archivo temporal: {e}")
 
+    #Funcion para pasar audio a texto
     def escuchar(self):
         
         print("Escuchando...")
@@ -90,9 +97,9 @@ class AsistenteClima:
                 print(f"Error inesperado al escuchar: {e}")
                 return None
             
+    #Obtener datos del clima desde OpenWeatherMap
     def obtener_clima(self, ciudad):
         
-        #Obtener datos del clima desde OpenWeatherMap
         if not self.API_KEY:
             self.hablar("Necesitas configurar la API key primero.")
             return None
@@ -129,6 +136,7 @@ class AsistenteClima:
         if not datos_clima:
             return "No obtuve información del clima."
         
+        #Guarda en variables datos clave de la respuesta de la API
         ciudad = datos_clima['name']
         temp_actual = round(datos_clima['main']['temp'])
         temp_min = round(datos_clima['main']['temp_min'])
@@ -145,8 +153,8 @@ class AsistenteClima:
         
         return mensaje
     
+    #Bucle principal
     def ejecutar(self):
-        #Bucle principal
         if not self.API_KEY:
             self.hablar("No tengo configurada la API key del clima")
             return
@@ -171,8 +179,8 @@ class AsistenteClima:
             datos_clima = self.obtener_clima(comando)
             
             if datos_clima:
-                respuesta = self.formatear_respuesta(datos_clima)
-                self.hablar(respuesta)
+                respuestaAPI = self.formatear_respuesta(datos_clima)
+                self.hablar(respuestaAPI)
             else:
                 self.hablar(f"Lo siento, no pude obtener el clima para {comando}")
             
@@ -185,7 +193,7 @@ class AsistenteClima:
                     self.hablar("¡Hasta luego! Que tengas un buen día.")
                     break
                 
-                elif any(palabra in respuesta for palabra in ['Si', 'Sí', 'Continua']):
+                elif any(palabra in respuesta for palabra in ['si', 'sí', 'continua']):
                     continue
             else:
                 self.hablar("No te entendí. Preguntaré de nuevo.")
