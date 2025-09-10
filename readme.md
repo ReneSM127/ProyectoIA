@@ -8,10 +8,6 @@ Para instalar las librerías necesarias utilizamos el siguiente comando:
 ```
 pip install SpeechRecognition pyaudio requests gTTTS pygame
 ```
-En caso de usar un entorno virtual de python
-```
-pip install -r requirements.txt
-```
 # Ejecutar
 Para ejecutar la aplicación utilizamos el comando dependiendo de nuestro sistema operativo
 ### Windows
