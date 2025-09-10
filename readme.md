@@ -12,8 +12,18 @@ En caso de usar un entorno virtual de python
 ```
 pip install -r requirements.txt
 ```
+# Ejecutar
+Para ejecutar la aplicación utilizamos el comando dependiendo de nuestro sistema operativo
+### Windows
+```
+python asistenteclima.py
+```
+### MacOS y Linux
+```
+python3 asistenteclima.py
+```
 
-# Funcionamiento del código
+# Explicación breve del código
 
 ## Librerías a utilizar
 - SpeechRecognition <-- Utilizada para reconocer palabras de un audio
