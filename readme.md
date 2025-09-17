@@ -8,6 +8,44 @@ Para instalar las librerías necesarias utilizamos el siguiente comando:
 ```
 pip install SpeechRecognition pyaudio requests gTTTS pygame
 ```
+Recomendamos usar un entorno virtual de python para no tener conflictos con versiones de las líbrerías, para ello ejecutamos:
+### Windows
+1. Clonamos este repositorio
+2. En una terminal, ejecutamos el siguiente comando
+```
+python -m venv venv
+```
+3. Activamos el entorno con el siguiente comando:
+```
+venv\Scripts\activate.bat
+```
+4. Usamos cualquiera de los siguientes comandos para instalar las librerías:
+```
+pip install -r requirements.txt
+```
+Ó
+```
+pip install SpeechRecognition pyaudio requests gTTTS pygame
+```
+### Linux/MacOS
+1. Clonamos este repositorio
+2. En una terminal, ejecutamos el siguiente comando
+```
+python3 -m venv venv
+```
+3. Activamos el entorno con el siguiente comando:
+```
+source venv/bin/activate
+```
+4. Usamos cualquiera de los siguientes comandos para instalar las librerías:
+```
+pip install -r requirements.txt
+```
+Ó
+```
+pip install SpeechRecognition pyaudio requests gTTTS pygame
+```
+
 # Ejecutar
 Para ejecutar la aplicación utilizamos el comando dependiendo de nuestro sistema operativo
 ### Windows
@@ -31,7 +69,8 @@ python3 asistenteclima.py
 - tempfile <-- Librería para crear archivos temporales
 
 ### Clase AsistenteClima
-Primero se inicializa el Asistente con la API KEY de OpenWeatherMap y el end point
+Primero se inicializa el Asistente con la API KEY de OpenWeatherMap y el endpoint.
+
 Además se configura el microfono de manera automática
 
 #### Hablar()
